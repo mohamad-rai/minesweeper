@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR.A | Minesweeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <audio src="beep.m4a" id="beep" loop hidden></audio>
+    <audio src="explode.wav" id="explode" hidden></audio>
+    <div class="grid" id="body"></div>
+    <div class="result" id="result"></div>
+    <div class="result" id="time"></div>
+    <div class="result">
+        <button onclick="restart(9,9,10)">Restart</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
