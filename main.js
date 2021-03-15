@@ -7,6 +7,7 @@ const result = document.getElementById("result");
 const body = document.getElementById("body");
 const beep = document.getElementById("beep");
 const explode = document.getElementById("explode");
+const victory = document.getElementById("victory");
 let endGame = false;
 //timer ↓
 let timerText = document.getElementById('time'),
@@ -45,10 +46,10 @@ const saveIfIsMine = (row, col, td) => {
     return false;
 }
 // show mines and stop the game
-const finishGame = () => mines.forEach(v => {
+const finishGame = (userExplode = 1) => mines.forEach(v => {
     endGame = true;
     beep.pause();
-    explode.play();
+    userExplode === 1 ? explode.play() : victory.play();
     let score = document.getElementsByClassName("uncovered").length - mines.length + 1;
     result.innerText = `your score: ${score}`;
     clearTimeout(t);
@@ -58,7 +59,7 @@ const finishGame = () => mines.forEach(v => {
 // pick mine location
 const pickMineFromBoard = mineCount => {
     for (let i = 0; i < mineCount; i++) {
-        //                ↓ because after delete values will be diffrent with indexes
+        //                ↓ because after delete values will be different with indexes
         let index = random(boardCells.length);
         mineLocations.push(boardCells[index]);
         boardCells.splice(index, 1);
@@ -158,6 +159,14 @@ const start = (row, col, mineCount) => {
                 if (isMine) finishGame();
                 else {
                     checkSpaces(rowIndex, colIndex, col.element);
+                    let visitedCols = 0;
+                    spaces.map(rowSpace => {
+                        rowSpace.map(colSpace=>{
+                            if(colSpace.visit) visitedCols++;
+                        })
+                    })
+                    console.log(visitedCols);
+                    if(visitedCols === (spaces.length * 9) - mineCount) finishGame(0);
                 }
             });
         });

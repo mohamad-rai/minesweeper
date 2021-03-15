@@ -45,3 +45,4 @@ td:not(.uncovered):hover{background: #ddd}
     color: white;
     -webkit-text-stroke: 1px red;
 }
+.mine{background: darkred}
