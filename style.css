@@ -28,13 +28,17 @@ td{
     text-align: center;
     vertical-align: center;
 }
-td:not(.uncovered):hover{background: #ddd}
+td:not(.uncovered):hover{background-color: #ddd}
 .uncovered:not(.mine){
     background-color: gray;
     color: white;
 }
 .uncovered.mine{
     background-image: url("bomb.png");
+    background-size: 100%;
+}
+.flag{
+    background-image: url("flag.png");
     background-size: 100%;
 }
 .result{
@@ -45,4 +49,3 @@ td:not(.uncovered):hover{background: #ddd}
     color: white;
     -webkit-text-stroke: 1px red;
 }
-.mine{background: darkred}
