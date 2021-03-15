@@ -87,7 +87,7 @@ const validNeighbors = (rowIndex, columnIndex) => {
         nextRow[columnIndex], // north
         nextRow[columnIndex + 1] // northeast
     ];
-    let neighbors = invalidNeighbors.filter(neighbor => neighbor != null && !neighbor.visit);
+    let neighbors = invalidNeighbors.filter(neighbor => neighbor != null && !neighbor.visit && !neighbor.flag);
     return neighbors;
 }
 /*
@@ -114,6 +114,7 @@ const createTable = (row, col) => {
                 y: i,
                 x: j,
                 isMine: isMine,
+                flag: false,
                 visit: false,
                 element: td
             };
@@ -150,11 +151,12 @@ const start = (row, col, mineCount) => {
     // add listener
     spaces.forEach((row, rowIndex) => {
         row.forEach((col, colIndex) => {
-            col.element.addEventListener("click", () => {
+            col.element.addEventListener("click", function () {
                 if (endGame) {
                     alert("you finished the game!");
                     return false;
                 }
+                if (this.classList.contains('flag')) return false;
                 let isMine = mineLocations.includes((rowIndex * 9) + colIndex);
                 if (isMine) finishGame();
                 else {
@@ -165,9 +167,17 @@ const start = (row, col, mineCount) => {
                             if(colSpace.visit) visitedCols++;
                         })
                     })
-                    console.log(visitedCols);
                     if(visitedCols === (spaces.length * 9) - mineCount) finishGame(0);
                 }
+            });
+            col.element.addEventListener("contextmenu", function(e) {
+                e.preventDefault();
+                if (endGame) {
+                    alert("you finished the game!");
+                    return false;
+                }
+                this.classList.toggle('flag');
+                spaces[rowIndex][colIndex].flag = !spaces[rowIndex][colIndex].flag;
             });
         });
     });
